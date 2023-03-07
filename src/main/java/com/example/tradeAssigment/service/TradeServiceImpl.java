@@ -2,6 +2,9 @@ package com.example.tradeAssigment.service;
 
 import com.example.tradeAssigment.model.Trade;
 import com.example.tradeAssigment.repository.TradeRepository;
+import com.example.tradeAssigment.scheduledTasks.UpdateFlagTask;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +14,8 @@ import java.util.Optional;
 
 @Service
 public class TradeServiceImpl implements TradeService {
+    private static final Logger logger = LoggerFactory.getLogger(TradeServiceImpl.class);
+
 
     @Autowired
     private TradeRepository tradeRepository;
@@ -26,6 +31,7 @@ public class TradeServiceImpl implements TradeService {
 
     private boolean validateVersion(Trade trade, Trade trade1) {
         if (trade.getVersion() >= trade1.getVersion()) {
+            logger.info("Trade Id exists in the data");
             return true;
         }
         return false;
